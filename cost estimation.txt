@@ -1,0 +1,81 @@
+Hardware Cost Estimation:
+
+Raspberry Pi Pico
+Cost: ₹350 - ₹500
+(A low-cost microcontroller ideal for interfacing sensors and controlling the system.)
+
+MLX90614 Infrared Temperature Sensor
+Cost: ₹1,000 - ₹1,500
+(A non-contact infrared sensor for body temperature measurement.)
+
+Camera Module (USB or ESP32-CAM)
+USB Camera: ₹500 - ₹1,500
+ESP32-CAM: ₹500 - ₹1,000
+(Used for face detection via OpenCV. ESP32-CAM has a built-in camera and Wi-Fi.)
+
+LCD Display (16x2 or Touchscreen)
+16x2 LCD: ₹150 - ₹250
+Touchscreen (2.8-inch): ₹500 - ₹1,000
+(For displaying access messages like "Access Granted" or "Access Denied.")
+
+Buzzer/LED for Feedback
+Buzzer: ₹50 - ₹100
+LEDs: ₹10 - ₹30
+(For providing audio/visual feedback upon access denial.)
+
+Power Supply & Cables
+Cost: ₹300 - ₹500
+(Powering the Raspberry Pi Pico and connected components.)
+
+Breadboard/PCB
+Breadboard: ₹150 - ₹250
+PCB: ₹300 - ₹600
+(For prototyping the circuit and connections.)
+
+
+Software Cost Estimation:
+
+MicroPython (Free)
+Cost: Free
+(MicroPython is open-source and free to use for programming the Raspberry Pi Pico.)
+
+OpenCV (Free)
+Cost: Free
+(OpenCV is open-source and free for computer vision tasks.)
+
+TensorFlow/Keras (Free)
+Cost: Free
+(TensorFlow and Keras are free, open-source machine learning frameworks.)
+
+NumPy (Free)
+Cost: Free
+(NumPy is open-source and free for numerical computing.)
+
+uasyncio (Free)
+Cost: Free
+(This MicroPython library is free for managing asynchronous tasks.)
+
+Thonny IDE (Free)
+Cost: Free
+(Thonny is a free IDE for MicroPython development on Raspberry Pi Pico.)
+
+PyCharm (Free or Paid)
+Community Edition (Free): ₹0
+Professional Edition: ₹2,000 - ₹6,000 per year
+(For Python-based development, TensorFlow/Keras integration, and debugging.)
+
+
+Total Estimated Cost (in INR):
+
+Raspberry Pi Pico: ₹350 - ₹500
+MLX90614 Sensor: ₹1,000 - ₹1,500
+Camera Module: ₹500 - ₹1,500
+LCD Display: ₹150 - ₹1,000
+Buzzer/LED: ₹60 - ₹130
+Power Supply & Cables: ₹300 - ₹500
+Breadboard/PCB: ₹150 - ₹600
+Software (Free): ₹0
+
+
+Total (Approximate): ₹2,510 - ₹6,730
+This estimation can vary depending on component choices and where you purchase them. You can save costs by opting for more affordable components or using a breadboard for prototyping before moving to a PCB.

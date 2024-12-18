@@ -1,0 +1,303 @@
+Project Title: Face Mask Detection With Body Temperature Measurement
+
+Project Description:
+This project aims to design and implement a security clearance system that integrates face mask detection and body temperature measurement. It ensures that a person can enter premises only if they are wearing a face mask and their body temperature is below a predefined threshold. The system leverages Python-based libraries to train a face mask detection model and uses hardware sensors to measure body temperature, interfaced with a Raspberry Pi Pico using MicroPython.
+
+Project Overview:
+
+Objective: To automate the process of verifying health compliance (face mask and body temperature) for entry into premises, leveraging Raspberry Pi Pico and associated technologies like TensorFlow and MLX90614 sensor.
+
+Target Use Case: The system can be used in various public spaces like offices, schools, and hospitals, ensuring rapid, hygienic, and reliable checks for public safety.
+
+Technology: Raspberry Pi Pico with MicroPython, camera module (for face detection), MLX90614 infrared temperature sensor (for temperature measurement), and OpenCV/TensorFlow/Keras for face mask detection.
+
+
+Strengths of the Project:
+Relevance and Practicality: The project is highly relevant in the post-pandemic world, as organizations seek automated systems for health monitoring.
+
+Cost-Effectiveness: The use of Raspberry Pi Pico ensures a low-cost solution, making it accessible for a wide range of organizations.
+
+Non-Contact Operation: The use of an infrared sensor for temperature measurement ensures hygienic, contactless operation, which is a significant advantage in health and safety contexts.
+
+Modular and Flexible: The use of Python-based libraries and the integration of multiple components (camera, sensor, microcontroller) make the project modular, adaptable to different environments, and easy to scale.
+
+
+Introduction:
+In the post-pandemic era, ensuring public health and safety in shared spaces has become a global priority. Many organizations and facilities are seeking automated solutions to enforce health compliance rules, such as wearing face masks and maintaining normal body temperature. Manual checks are not only time-consuming but also expose the personnel involved to health risks.
+
+The "Face Mask Detection With Body Temperature Measurement" project is an innovative and practical solution that combines computer vision and sensor technology to automate the process of verifying health compliance. By integrating real-time face mask detection and contactless body temperature measurement into a single system, this project addresses critical challenges in public health monitoring.
+
+The project employs a Raspberry Pi Pico microcontroller for hardware interfacing, coupled with Python-based machine learning models for accurate face mask detection. The body temperature is measured using the MLX90614 infrared temperature sensor, ensuring non-contact and hygienic operation. The system is designed to provide rapid and reliable assessments, displaying results on an LCD and controlling access based on predefined thresholds.
+
+This project can be deployed in a variety of settings, including offices, schools, hospitals, and public transportation hubs, to enhance security and prevent the spread of infections. Its cost-effectiveness and ease of implementation make it an ideal choice for organizations seeking to implement safety measures efficiently. By using lightweight components like the Raspberry Pi Pico and leveraging MicroPython, the project ensures low power consumption, high flexibility, and simplicity in development and maintenance.
+
+
+
+Roadmap
+
+
+
+Phase 1: Requirements Gathering
+
+Hardware Requirements:
+
+Microcontroller: Raspberry Pi Pico.
+
+Temperature Sensor: MLX90614 Infrared Temperature Sensor.
+
+Camera Module: USB Camera or ESP32-CAM (if using external).
+
+Display: LCD/Touchscreen.
+
+Additional: Power supply, connecting cables, breadboard/PCB.
+
+Software Requirements:
+
+Programming Language: MicroPython, Python.
+
+Libraries: OpenCV, TensorFlow/Keras, NumPy, machine and uasyncio for MicroPython.
+
+Tools: Thonny IDE, Python IDE (e.g., PyCharm).
+
+Operating System: Windows/Linux for development.
+
+
+
+
+Phase 2: System Design
+
+
+
+Block Diagram:
+
+Camera Module ➔ Face Mask Detection (Python Model)
+
+Temperature Sensor ➔ Raspberry Pi Pico (Temperature Reading)
+
+Raspberry Pi Pico ➔ Display ➔ System Output (Allow/Deny Access)
+
+
+            +-----------------------+
+            |    Camera Module      |
+            | (USB or ESP32-CAM)    |
+            +-----------------------+
+                      |
+                      |
+           +-----------------------+
+           |   Raspberry Pi Pico   |
+           |   (Microcontroller)   |
+           +-----------------------+
+              |              |
+              |              |
+    +----------------+   +--------------------+
+    | MLX90614       |   | Face Mask Detection|
+    | Temperature    |   | Model (TensorFlow) |
+    | Sensor         |   |  (Via USB)         |
+    +----------------+   +--------------------+
+              |                     |
+              +----------+----------+
+                         |
+              +-----------------------+
+              |    Decision Making    |
+              |    (Access Control)   |
+              +-----------------------+
+                         |
+              +-----------------------+
+              |       Output          |
+              |  (LCD, Buzzer, LED)   |
+              +-----------------------+
+
+
+
+
+Flowchart:
+
+Capture Image using Camera.
+
+Process Image for Mask Detection.
+
+Measure Temperature.
+
+If Mask = True and Temp < Threshold, then Grant Access.
+
+Else, Deny Access.
+
+
+
+Phase 3: Implementation
+
+Step 1: Face Mask Detection Model
+
+Dataset Preparation:
+
+Collect images of individuals with and without masks.
+
+Label the dataset (e.g., "mask" and "no_mask").
+
+Split into training and testing datasets.
+
+Model Training:
+
+Use TensorFlow/Keras.
+
+Model: MobileNetV2 for lightweight performance.
+
+Achieve ≥95% accuracy.
+
+
+
+
+Code Example:
+
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.models import Model
+
+base_model = MobileNetV2(weights="imagenet", include_top=False)
+x = base_model.output
+x = GlobalAveragePooling2D()(x)
+x = Dense(128, activation="relu")(x)
+predictions = Dense(2, activation="softmax")(x)
+model = Model(inputs=base_model.input, outputs=predictions)
+
+model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+model.fit(train_data, validation_data=val_data, epochs=20)
+model.save("mask_detector.model")
+
+
+
+
+Testing the Model:
+
+Use OpenCV for real-time detection.
+
+
+
+Code Example:
+
+import cv2
+from tensorflow.keras.models import load_model
+
+model = load_model("mask_detector.model")
+camera = cv2.VideoCapture(0)
+
+while True:
+    ret, frame = camera.read()
+    # Preprocess frame and predict
+    result = model.predict(frame)
+    # Display result
+
+
+
+
+Step 2: Body Temperature Measurement
+
+
+
+Sensor Interfacing:
+
+Connect MLX90614 to Raspberry Pi Pico via I2C.
+
+Microcontroller Programming:
+
+Use MicroPython to initialize I2C communication and read temperature data.
+
+
+
+Code Example:
+
+from machine import I2C, Pin
+import time
+
+i2c = I2C(0, scl=Pin(17), sda=Pin(16), freq=100000)
+sensor_address = 0x5A
+temp_register = 0x07
+
+def read_temperature():
+    temp_data = i2c.readfrom_mem(sensor_address, temp_register, 2)
+    temp = int.from_bytes(temp_data, 'little') * 0.02 - 273.15
+    return temp
+
+while True:
+    print("Temperature:", read_temperature())
+    time.sleep(1)
+
+
+
+Step 3: Integration
+
+
+
+Data Communication:
+
+Use UART communication between the camera module (if external) and Raspberry Pi Pico.
+
+Process both mask detection and temperature data to determine access.
+
+
+
+Display Result:
+
+Use an LCD to display messages ("Access Granted" or "Access Denied").
+
+Step 4: Testing and Calibration
+
+Test the system with multiple individuals.
+
+Calibrate the temperature sensor for accuracy.
+
+Optimize the face mask detection model for speed.
+
+
+
+Phase 4: Deployment
+
+Hardware Assembly:
+
+Assemble all components on a PCB.
+
+Encase the system for durability.
+
+Software Deployment:
+
+Deploy the trained model.
+
+Flash the Raspberry Pi Pico firmware.
+
+
+
+Phase 5: Documentation
+
+Prepare a detailed report.
+
+Include schematics, code, and user manual.
+
+
+
+Hardware Connections:
+
+Camera ➔ USB to PC or UART to Raspberry Pi Pico.
+
+MLX90614 ➔ I2C pins on Raspberry Pi Pico (SCL to GP17, SDA to GP16).
+
+Raspberry Pi Pico ➔ UART to display or external module.
+
+LCD ➔ GPIO pins on Raspberry Pi Pico.
+
+
+
+
+Source Code:
+
+Python code for face mask detection.
+
+MicroPython code for Raspberry Pi Pico to read temperature and control access.
+
+
+
+Microcontroller Selection:
+
+Raspberry Pi Pico: Cost-effective, lightweight, and supports MicroPython for ease of implementation.
+
+This roadmap ensures a systematic approach to developing a robust security clearance system integrating face mask detection and body temperature measurement, optimized for Raspberry Pi Pico.

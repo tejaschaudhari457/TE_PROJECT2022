@@ -1,0 +1,28 @@
+# Face Mask Detection With Body Temperature Measurement
+
+## Overview
+This project aims to create a security system to verify health compliance (wearing face masks and checking body temperature) for entry into premises using a Raspberry Pi Pico.
+
+## Hardware
+- Raspberry Pi Pico
+- MLX90614 IR Temperature Sensor
+- USB Camera/ESP32-CAM for Face Mask Detection
+- LCD/LED for output
+
+## Software
+- OpenCV
+- TensorFlow (Keras)
+- MicroPython for Raspberry Pi Pico
+
+## Installation
+1. Install necessary libraries for TensorFlow, OpenCV, and MicroPython on your system.
+2. Connect the hardware components as per the wiring diagram.
+3. Run the code for mask detection and body temperature measurement.
+
+## How it Works
+1. The system captures an image for face mask detection.
+2. It checks if the person is wearing a mask and if their temperature is below the threshold.
+3. If both conditions are met, access is granted; otherwise, it is denied.
+
+## License
+MIT License

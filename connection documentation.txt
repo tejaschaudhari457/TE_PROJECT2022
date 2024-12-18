@@ -1,0 +1,136 @@
+                   +---------------------+
+                   |      Camera         |       -->   Face Mask Detection (OpenCV)
+                   +---------------------+
+                            |
+                            v
+                   +---------------------+
+                   | Raspberry Pi Pico   |   -->   Control Logic, Decision Making
+                   +---------------------+
+                         |       |
+              +----------+       +----------+
+              |                        |
+   +------------------+       +-----------------------+
+   | MLX90614 Sensor  |       | LCD Display           |
+   | (Temperature)    |       | (Access Messages)     |
+   +------------------+       +-----------------------+
+              |                         |
+         Temperature                  Result Display
+              |
+        +-------------------+          
+        | Buzzer/LED        |    -->   Feedback on Access Denial (if any)
+        +-------------------+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Connection Documentation: Face Mask Detection with Body Temperature Measurement Project
+
+
+Step-by-Step Integration
+
+Step 1: Camera Module
+Ensure the camera is properly connected to Raspberry Pi Pico or PC via USB/ESP32-CAM.
+The camera will stream video frames that OpenCV will process for face mask detection.
+
+Step 2: Temperature Sensor (MLX90614)
+Connect the sensor’s SDA and SCL pins to GPIO 16 and GPIO 17 of Raspberry Pi Pico.
+Read temperature data through I2C protocol using MicroPython. The temperature will be converted from raw sensor data and compared against a threshold.
+
+Step 3: LCD Display
+Connect the data pins of the LCD to appropriate GPIO pins on the Raspberry Pi Pico.
+Send messages ("Access Granted" or "Access Denied") to be displayed based on the system’s decision.
+
+Step 4: Buzzer/LED for Feedback
+Connect the buzzer or LED to the GPIO pins and trigger them when the access is denied.
+
+Step 5: Decision-Making Process
+Use Python-based logic to analyze the mask detection result and body temperature.
+Display access results on the LCD.
+Activate feedback (buzzer or LED) when access is denied.
+
+
+Testing and Debugging
+Test the camera: Ensure face mask detection works in various lighting conditions.
+Test the temperature sensor: Verify that the temperature readings are accurate and consistent.
+Test the LCD and feedback: Ensure the correct message is displayed, and the buzzer/LED activates as expected.
+
+
+Conclusion
+This system efficiently integrates hardware components like the Raspberry Pi Pico, camera module, temperature sensor, LCD, and feedback components to create an automated access control system. The machine learning model for face mask detection works seamlessly with the temperature sensor to determine access, offering a hygienic and contactless solution.
+
+
+
+
+System Overview
+
+The system performs two critical tasks:
+
+Face Mask Detection – Detects if a person is wearing a mask using a camera and machine learning.
+Body Temperature Measurement – Measures the body temperature using the MLX90614 infrared sensor.
+Once both checks are performed, the system decides whether to grant or deny access based on predefined criteria (e.g., mask worn and temperature below threshold). Results are displayed on the LCD, and feedback is given via buzzer or LED.
+
+Hardware Components and Connections
+
+1. Raspberry Pi Pico (Microcontroller)
+Role: Acts as the central controller, interfacing with all components (sensor, camera, display).
+Connections:
+I2C Pins (GPIO 16 and GPIO 17): Used to interface with the MLX90614 infrared temperature sensor.
+USB Port: Connects to a computer for programming and debugging (when required).
+GPIO Pins (Various): Controls the LCD display and buzzer/LED.
+UART (If using external camera): For communication with the camera module (e.g., ESP32-CAM).
+
+2. MLX90614 Infrared Temperature Sensor
+Role: Measures body temperature via infrared light. It's a non-contact sensor.
+Connections:
+VCC Pin: Connects to 3.3V or 5V on the Raspberry Pi Pico (depending on model).
+GND Pin: Connects to GND on Raspberry Pi Pico.
+SDA Pin: Connects to GPIO 16 (SDA) on the Raspberry Pi Pico.
+SCL Pin: Connects to GPIO 17 (SCL) on the Raspberry Pi Pico.
+
+3. Camera Module (USB or ESP32-CAM)
+Role: Captures the image/video feed for face mask detection.
+Connections:
+USB Camera: Plugs into the Raspberry Pi Pico via USB (if using a Raspberry Pi board or PC).
+ESP32-CAM: Connects via UART (TX, RX pins) to Raspberry Pi Pico for image transmission.
+Power Supply: Provides 5V and GND connections for the camera.
+
+
+4. LCD Display
+Role: Displays the result of the health check (Access Granted/Denied).
+Connections:
+VCC Pin: Connects to 3.3V or 5V on Raspberry Pi Pico.
+GND Pin: Connects to GND on Raspberry Pi Pico.
+Data Pins (D4, D5, D6, D7): Connect to specific GPIO pins for data transmission to the LCD. (For 16x2 LCD, typically GPIO 0 to GPIO 3 or 5 to 12 pins are used).
+
+5. Buzzer/LED for Feedback
+Role: Provides visual or audio feedback in case of access denial.
+Connections:
+
+Buzzer:
+VCC Pin: Connects to 5V.
+GND Pin: Connects to GND on the Raspberry Pi Pico.
+Signal Pin: Connects to a GPIO pin (e.g., GPIO 15) to trigger sound when access is denied.
+
+LED:
+Anode (Positive Pin): Connects to a GPIO pin (e.g., GPIO 14) for triggering.
+Cathode (Negative Pin): Connects to GND on the Raspberry Pi Pico.
+
+
+Software and Integration Flow
+
+Face Mask Detection (Machine Learning)
+The camera module captures images of individuals approaching the system.
+The captured image is passed to the TensorFlow/Keras model (running on Raspberry Pi via Python).
+The model processes the image using OpenCV for real-time detection. The model outputs whether a person is wearing a mask or not (classified as "mask" or "no_mask").
+The result is processed and displayed on the LCD (Access Granted or Denied).
+
+Body Temperature Measurement
+The MLX90614 temperature sensor measures the body temperature of the person in front of the system.
+The temperature data is read through I2C communication on the Raspberry Pi Pico.
+The reading is compared with a predefined temperature threshold. If the temperature is higher than the threshold (e.g., 37.5°C), access is denied.
+
+Decision Making and Access Control
+Once both checks (mask detection and temperature measurement) are performed, the system makes a decision:
+Grant Access: If the person is wearing a mask and their temperature is below the threshold.
+Deny Access: If either the person is not wearing a mask or their temperature is above the threshold.
+The result is displayed on the LCD ("Access Granted" or "Access Denied").
+If access is denied, the buzzer or LED is triggered to notify the individual.
+
+

@@ -1,0 +1,62 @@
+Hardware List
+
+
+Raspberry Pi Pico
+
+A microcontroller board based on the ARM Cortex-M0+ processor, chosen for its cost-effectiveness and support for MicroPython. It's used to interface sensors, process data, and manage overall system control.
+MLX90614 Infrared Temperature Sensor
+
+A non-contact infrared sensor used to measure the body temperature from a distance. It's connected to the Raspberry Pi Pico via I2C for accurate and hygienic temperature measurements.
+Camera Module (USB or ESP32-CAM)
+
+The camera is used to capture real-time images for face mask detection. The USB camera or ESP32-CAM provides video feed to the Raspberry Pi Pico for processing.
+LCD Display (e.g., 16x2 LCD or Touchscreen)
+
+Used to display results such as "Access Granted" or "Access Denied." It provides a clear user interface to communicate the outcome of the health check.
+Buzzer or LED
+
+Optional, used for providing audio or visual feedback in case of denied access, ensuring that the user is immediately informed about the result.
+Power Supply and Cables
+
+To power the Raspberry Pi Pico and connect components like the camera and temperature sensor. Ensures the system operates efficiently and reliably.
+Breadboard/PCB
+
+For prototyping or assembling the components in a more permanent, durable manner once the project is finalized.
+
+
+Software List
+
+MicroPython
+Purpose: MicroPython is used to write scripts on the Raspberry Pi Pico. It provides a simple, easy-to-learn language with a rich set of libraries for microcontroller development.
+Why Used: The Raspberry Pi Pico supports MicroPython, and it allows seamless control of hardware interfaces like GPIO, I2C, and UART with low resource consumption.
+How: The code for sensor interfacing, temperature measurement, and access control is written in MicroPython, uploaded to the Pico, and executed for controlling the project functions.
+
+OpenCV (Computer Vision Library)
+Purpose: OpenCV is used to process the video feed from the camera for face mask detection.
+Why Used: It provides powerful functions for image processing, including real-time face detection and mask classification, which are essential for the project.
+How: The live feed from the camera is processed through OpenCV to detect faces and apply the trained mask detection model, enabling decision-making for granting or denying access.
+
+TensorFlow/Keras (Machine Learning Framework)
+Purpose: TensorFlow/Keras is used for developing and training the face mask detection model.
+Why Used: These frameworks are optimized for deep learning and offer easy integration with Python-based tools. They help in building a lightweight, accurate model (MobileNetV2) for mask detection.
+How: TensorFlow/Keras is used to train a model on a labeled dataset (with and without masks) and save it for real-time prediction using OpenCV in the system.
+
+NumPy
+Purpose: NumPy is used for efficient numerical operations during image processing and sensor data manipulation.
+Why Used: It provides high-performance array operations which are essential for manipulating pixel data (in OpenCV) and handling temperature readings.
+How: In face mask detection, NumPy aids in processing images and handling data transformations. In temperature sensing, it processes the raw data from the MLX90614 sensor.
+
+uasyncio (MicroPython library)
+Purpose: uasyncio is used to handle asynchronous tasks in MicroPython, such as sensor data reading and camera feed processing.
+Why Used: It provides an efficient way to handle concurrent tasks on the Raspberry Pi Pico, which is crucial for ensuring real-time performance in systems like this.
+How: The library allows reading temperature and capturing camera images simultaneously, which is necessary for continuous monitoring and decision-making without delays.
+
+Thonny IDE
+Purpose: Thonny is an IDE for Python that is simple and effective for writing MicroPython code.
+Why Used: It is user-friendly and specifically designed for working with Raspberry Pi Pico, enabling easy code uploading and debugging.
+How: Code is written in Thonny, then uploaded directly to the Raspberry Pi Pico for execution. It also helps in debugging and testing the system components.
+
+PyCharm (for Python development)
+Purpose: PyCharm is used for writing, testing, and debugging the machine learning code (TensorFlow, OpenCV).
+Why Used: It offers advanced features like autocompletion, debugging tools, and better handling of complex machine learning code. It helps streamline development for non-MicroPython portions of the project.
+How: The machine learning model for face mask detection is developed in PyCharm using TensorFlow/Keras and tested before being deployed to the Raspberry Pi Pico.

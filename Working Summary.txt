@@ -1,0 +1,128 @@
+            +-----------------------+
+            |    Camera Module      |
+            | (USB or ESP32-CAM)    |
+            +-----------------------+
+                      |
+                      |
+           +-----------------------+
+           |   Raspberry Pi Pico   |
+           |   (Microcontroller)   |
+           +-----------------------+
+              |              |
+              |              |
+    +----------------+   +--------------------+
+    | MLX90614       |   | Face Mask Detection|
+    | Temperature    |   | Model (TensorFlow) |
+    | Sensor         |   |  (Via USB)         |
+    +----------------+   +--------------------+
+              |                     |
+              +----------+----------+
+                         |
+              +-----------------------+
+              |    Decision Making    |
+              |    (Access Control)   |
+              +-----------------------+
+                         |
+              +-----------------------+
+              |       Output          |
+              |  (LCD, Buzzer, LED)   |
+              +-----------------------+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Working Summary:
+
+The "Face Mask Detection With Body Temperature Measurement" system operates as an automated, non-contact health monitoring station. It integrates computer vision for face mask detection with a thermal sensor for body temperature measurement. Below is a detailed breakdown of the working:
+
+
+Face Mask Detection:
+
+A USB camera or ESP32-CAM captures real-time images of the person standing in front of the system.
+
+The images are processed by a trained face mask detection model developed using Python with TensorFlow/Keras.
+
+The model analyzes the image to classify whether the individual is wearing a mask or not. It outputs a binary result: "Mask" or "No Mask."
+
+
+
+Body Temperature Measurement:
+
+The MLX90614 infrared temperature sensor is used for contactless body temperature measurement.
+
+The sensor is interfaced with the Raspberry Pi Pico via I2C communication. It continuously measures the temperature of the person standing in front of it and sends the readings to the microcontroller.
+
+
+
+Data Integration and Processing:
+
+The Raspberry Pi Pico acts as the central control unit, integrating the results from the face mask detection system and the temperature sensor.
+
+If the mask detection output is "Mask" and the measured temperature is below the defined threshold (e.g., 37.5°C), the system grants access.
+
+If either condition is not met, access is denied.
+
+
+
+Output Display and Access Control:
+
+The result ("Access Granted" or "Access Denied") is displayed on an LCD screen connected to the Raspberry Pi Pico.
+
+An optional buzzer or LED can be added for audio-visual indications of the decision.
+
+
+
+Detailed Step-by-Step Workflow:
+
+Initialization:
+
+The system initializes the camera, loads the face mask detection model, and sets up communication with the temperature sensor.
+
+The LCD is cleared and set to display initial messages (e.g., "Stand in front of the system").
+
+
+
+Real-Time Image Capture:
+
+The camera captures a frame of the individual standing in front of the system.
+
+The image is preprocessed (e.g., resizing, normalization) and passed to the trained face mask detection model for classification.
+
+
+
+Face Mask Detection:
+
+The model processes the image and outputs a label: "Mask" or "No Mask."
+
+
+
+Temperature Measurement:
+
+Simultaneously, the MLX90614 sensor measures the person’s forehead temperature and sends the data to the Raspberry Pi Pico via I2C.
+
+The microcontroller converts the raw data into a readable temperature value in Celsius.
+
+
+
+Decision Making:
+
+The Raspberry Pi Pico evaluates both conditions:
+
+If "Mask" is detected and the temperature is within the permissible range, the decision is "Access Granted."
+
+If "No Mask" is detected or the temperature exceeds the threshold, the decision is "Access Denied."
+
+
+
+Output and Notification:
+
+The LCD displays the final result.
+
+Additional indicators, such as LEDs or buzzers, can signal access status.
+
+
+
+Looping for Continuous Operation:
+
+The system returns to its initial state, ready to process the next individual.

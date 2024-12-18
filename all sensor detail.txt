@@ -1,0 +1,86 @@
+Sensors Used in the Project:
+
+In the Face Mask Detection with Body Temperature Measurement project, we are using two main sensors:
+
+MLX90614 Infrared Temperature Sensor – for body temperature measurement.
+Camera Module (e.g., USB or ESP32-CAM) – for face detection and mask detection.
+Let's explore these sensors in detail, including their working mechanism and key features from their datasheets.
+
+1. MLX90614 Infrared Temperature Sensor
+Overview:
+The MLX90614 is a non-contact infrared temperature sensor used to measure the temperature of an object or body from a distance by detecting infrared radiation. It communicates with microcontrollers using the I2C protocol.
+Working Principle:
+The MLX90614 works by detecting the infrared radiation emitted by an object or body.
+The sensor uses a thermopile sensor array to measure the temperature of the infrared radiation, which is then converted into a temperature reading.
+The sensor operates in a contactless mode, making it ideal for body temperature measurements in health applications.
+The sensor provides two outputs:
+Ambient Temperature (the temperature of the environment)
+Object Temperature (the temperature of the body or object being measured).
+Important Features:
+Non-contact measurement: Ideal for hygienic, safe, and fast temperature readings.
+I2C Interface: Easy communication with microcontrollers like Raspberry Pi Pico.
+High Accuracy: Typically ±0.5°C over a wide range of temperatures.
+Wide Operating Range: Measures from -40°C to +85°C for ambient temperature and -70°C to +380°C for object temperature.
+Key Points from the Datasheet:
+Supply Voltage: 3.3V to 5V
+Communication: I2C (SDA, SCL pins)
+Accuracy: ±0.5°C (for object temperature) at 25°C
+Response Time: Typically 50ms for stable reading
+Operating Temperature Range: -40°C to 85°C (ambient temperature)
+Resolution: 0.02°C
+Output: 16-bit resolution, provides data for ambient and object temperature
+Field of View: 35° (typical) for measuring body temperature
+Working Example:
+The sensor is connected to the Raspberry Pi Pico via the SDA (GPIO 16) and SCL (GPIO 17) pins for I2C communication.
+It continuously reads the temperature of the body and outputs it to the microcontroller, which can then compare it against a predefined threshold to determine whether access should be granted or denied.
+
+
+
+2. Camera Module (USB or ESP32-CAM)
+Overview:
+The camera module captures images or video frames, which are then processed to detect the presence of a face and check if the person is wearing a mask. The ESP32-CAM is a common camera module used in such applications due to its low cost and built-in WiFi functionality. Alternatively, a USB camera can be used if connected to a Raspberry Pi or PC.
+Working Principle:
+ESP32-CAM: The ESP32-CAM module includes a camera sensor (OV2640) and the ESP32 microcontroller, which captures video or image frames and transmits them over WiFi or serial communication.
+USB Camera: It connects via a USB interface (typically to a Raspberry Pi or PC) and outputs a video stream that can be processed by computer vision algorithms.
+For face mask detection, we use OpenCV in Python to analyze the captured frames, detect faces, and classify whether they are wearing a mask or not using a pre-trained deep learning model.
+Important Features:
+Resolution: The ESP32-CAM supports image capture at up to 1600x1200 pixels, while a USB camera typically supports resolutions like 640x480 or 1280x720.
+Image Processing: Captured images are processed for face detection and mask classification.
+Output: Provides a video stream or still images that can be used for real-time detection.
+Key Points from the Datasheet for ESP32-CAM (OV2640 Sensor):
+Sensor: OV2640 CMOS sensor
+Resolution: 2MP (1600x1200 pixels)
+Frame Rate: 30fps at 640x480 resolution
+Interface: UART or SPI for communication with Raspberry Pi Pico or microcontroller.
+Power Supply: 5V via external power source or regulator.
+Field of View: 65° horizontal angle of view.
+Operating Voltage: 3.3V to 5V
+Onboard Features: Built-in flash, microSD card slot for storing images (optional), and WiFi capability (for remote communication).
+Working Example:
+The ESP32-CAM is used to capture video frames of a person’s face. The captured frames are sent to the Raspberry Pi (or an external PC) for analysis using a deep learning model to detect the presence of a mask.
+The model classifies the face as either "mask" or "no_mask" based on the image data.
+For this, a MobileNetV2 model (trained with a dataset of mask and no-mask images) is used to classify the frames. The results are then passed to the access control logic.
+
+Summary of Sensor Integration:
+MLX90614 (Temperature Sensor):
+
+Interface: I2C (GPIO 16 for SDA, GPIO 17 for SCL on Raspberry Pi Pico).
+Function: Measures the object (body) and ambient temperature in a non-contact manner.
+Data: Provides a temperature reading (in Celsius) for decision-making.
+Camera Module (USB or ESP32-CAM):
+
+Interface: USB or UART (depending on the camera).
+Function: Captures images/video for processing face mask detection.
+Data: Provides real-time video frames that are processed by the machine learning model to classify whether the person is wearing a mask or not.
+Datasheets and Importance of Sensor Features
+MLX90614 Datasheet:
+
+Accuracy and Measurement Range: Ensures reliable and accurate temperature readings within a safe and broad range (ambient and object temperature).
+I2C Communication: Makes it easy to interface with microcontrollers like the Raspberry Pi Pico.
+Non-contact Measurement: Increases safety, especially in public or hygienic settings, as there is no direct contact required for temperature measurements.
+ESP32-CAM Datasheet:
+
+High Resolution (2MP): Allows clear and detailed image captures for face detection.
+WiFi and UART: Enables flexible data transfer options (either via local UART communication or remotely via WiFi).
+Built-in Flash: Useful for low-light conditions.
+These datasheets provide the specifications that ensure these sensors can be used for real-time data collection (temperature and face detection), crucial for an automated system that grants or denies access based on health parameters.

@@ -1,0 +1,21 @@
+                   +---------------------+
+                   |      Camera         |       -->   Face Mask Detection (OpenCV)
+                   +---------------------+
+                            |
+                            v
+                   +---------------------+
+                   | Raspberry Pi Pico   |   -->   Control Logic, Decision Making
+                   +---------------------+
+                         |       |
+              +----------+       +----------+
+              |                        |
+   +------------------+       +-----------------------+
+   | MLX90614 Sensor  |       | LCD Display           |
+   | (Temperature)    |       | (Access Messages)     |
+   +------------------+       +-----------------------+
+              |                         |
+         Temperature                  Result Display
+              |
+        +-------------------+          
+        | Buzzer/LED        |    -->   Feedback on Access Denial (if any)
+        +-------------------+

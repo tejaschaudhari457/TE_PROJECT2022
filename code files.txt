@@ -1,0 +1,37 @@
+make a file pleae /Face-Mask-Detection-With-Body-Temperature
+    ├── /src
+    │   ├── mask_detection_model.py
+    │   ├── mask_detection.py
+    │   ├── temperature_sensor.py
+    │   ├── main.py
+    │   └── utils.py
+    ├── /model
+    │   └── mask_detector.model
+    ├── /data
+    │   ├── train_data/
+    │   ├── validation_data/
+    │   └── dataset_info.txt
+    ├── /docs
+    │   └── README.md
+    ├── requirements.txt
+    ├── .gitignore
+    └── LICENSE  
+
+
+Face Mask Detection with TensorFlow:
+GitHub: https://github.com/prajnasbmj/face-mask-detection
+This repository contains a face mask detection model trained with TensorFlow and Keras.
+
+Temperature Measurement with MLX90614:
+GitHub: https://github.com/mik3y/raspberry-pi-temp-sensor
+This repository provides code for interfacing the MLX90614 infrared temperature sensor with a Raspberry Pi.
+
+Raspberry Pi Pico Projects:
+GitHub: https://github.com/raspberrypi/pico-examples
+The official repository for Raspberry Pi Pico examples, which may help you with interfacing the hardware components.
+
+List any external references or tutorials used to develop the project.
+
+TensorFlow Documentation: https://www.tensorflow.org/
+OpenCV Documentation: https://opencv.org/
+Raspberry Pi Pico: https://www.raspberrypi.org/documentation/pico/

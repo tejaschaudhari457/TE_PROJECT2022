@@ -1,0 +1,40 @@
+Project Title:
+Face Mask Detection With Body Temperature Measurement
+
+Project Overview:
+The Face Mask Detection With Body Temperature Measurement project is an automated security system designed to ensure compliance with health and safety protocols in various public and private spaces. The primary objective of this system is to verify that individuals entering a facility are wearing a face mask and their body temperature is within a safe range. The system integrates facial recognition technology to detect whether a person is wearing a mask, coupled with an infrared temperature sensor to measure body temperature. The hardware of the system is controlled by a Raspberry Pi Pico, which processes the inputs from a camera and temperature sensor. The software, based on Python, runs on the Raspberry Pi Pico, processing real-time images from the camera and temperature readings from the sensor, providing a decision on whether to grant or deny access based on predefined thresholds.
+
+Hardware Components:
+The project utilizes several hardware components that work together to achieve the desired outcome. The Raspberry Pi Pico is the microcontroller that serves as the central unit, controlling the other hardware components. The MLX90614 infrared temperature sensor is used to measure the body temperature of individuals from a distance, ensuring a contactless measurement. The camera module, which could be either a USB camera or an ESP32-CAM, is used for face detection. Images captured by the camera are processed to determine whether the person is wearing a face mask or not. For output, an LCD display or LEDs is used to show the results, indicating either "Access Granted" or "Access Denied." A buzzer may also be integrated for audible feedback on the access decision.
+
+Software Components:
+The software components consist of several key elements, primarily written in MicroPython to control the hardware. OpenCV is used for processing images from the camera and for detecting faces in real-time. TensorFlow (with Keras) is employed to train and utilize a machine learning model for face mask detection. The trained model is used to classify faces as either masked or unmasked based on the captured image. MicroPython runs on the Raspberry Pi Pico, which controls all hardware interactions, including sensor readings, camera control, and output display. The system continuously reads the temperature from the MLX90614 sensor and uses the camera to process face mask detection. If the individual is wearing a mask and their temperature is below the predefined threshold, the system grants access; otherwise, it denies access.
+
+Stepwise Implementation:
+Step 1: Set Up Hardware
+The first step involves setting up the hardware components. The MLX90614 temperature sensor is connected to the Raspberry Pi Pico using the I2C protocol. The camera module is also connected to the Raspberry Pi Pico, either via USB or UART for communication. An LCD or LED display is connected to show the access result, and if desired, a buzzer is added for audible feedback.
+
+Step 2: Install Software Libraries
+To interact with the hardware, various libraries need to be installed. For the Raspberry Pi Pico, MicroPython libraries like machine and uasyncio are used for controlling GPIO pins and asynchronous operations. The OpenCV library is required for image processing, while TensorFlow (with Keras) is used for face mask detection. These libraries allow the software to capture camera feeds, process the images for mask detection, read data from the temperature sensor, and manage the output to the display and buzzer.
+
+Step 3: Train Face Mask Detection Model
+The face mask detection model is trained using a dataset consisting of labeled images, either of people wearing masks or not. A deep learning model such as MobileNetV2 is employed to classify the images. The dataset is split into training and validation sets, and the model is trained using TensorFlow/Keras, achieving a high accuracy of 95% or higher. After training, the model is saved for future use in the system to detect faces in real-time.
+
+Step 4: Temperature Measurement Code
+To interface with the MLX90614 infrared temperature sensor, I2C communication is established between the Raspberry Pi Pico and the sensor. A MicroPython script is used to initialize the I2C bus and read temperature values from the sensor. The readings are continuously fetched, and the software compares the measured temperature with a predefined safe threshold to decide whether access should be granted.
+
+Step 5: Mask Detection and Access Control Logic
+The next step involves processing the live feed from the camera. Using OpenCV, the system detects faces in real-time and passes these images to the trained TensorFlow model for mask classification. If the model detects that the person is wearing a mask and their body temperature is within the safe range (below the threshold), the system will grant access by displaying "Access Granted" on the LCD or lighting a green LED. If either condition is not met, the system denies access and shows "Access Denied" or lights up a red LED.
+
+Step 6: Display Results
+Once the system processes the data, it outputs the decision on an LCD display. If access is granted, a "Access Granted" message is displayed, and a green LED or buzzer sounds. If the mask is not detected or the temperature is too high, an "Access Denied" message is shown, along with a red LED or buzzer. This feedback mechanism ensures that individuals are aware of the decision immediately.
+
+Code Explanation:
+The code is divided into modules to handle different parts of the system. One module is responsible for mask detection using TensorFlow, another handles the reading of temperature from the MLX90614 sensor, and another module manages communication with the Raspberry Pi Pico's GPIO pins for controlling output devices like the LCD display and buzzer. The system works in an endless loop, continuously capturing images and reading temperature until a decision is made, and feedback is provided.
+
+Testing and Calibration:
+Once the system is assembled, testing is crucial to ensure the functionality of both mask detection and temperature measurement. The face mask detection model is tested on various individuals to ensure accurate predictions. The temperature sensor is calibrated to ensure accurate readings, and the threshold temperature for granting access is adjusted based on calibration results. The system’s performance is evaluated to ensure that it runs efficiently and correctly under different conditions.
+
+Conclusion:
+This project successfully integrates computer vision and sensor technology to create an automated health compliance system. It provides a contactless, cost-effective, and efficient way to ensure that individuals entering a facility are following safety protocols. The use of Raspberry Pi Pico ensures that the system is lightweight and easily scalable, making it suitable for a wide range of applications, from offices and schools to hospitals and public spaces. Future improvements could include the integration of additional sensors or the optimization of the face mask detection model for faster performance.
+
